@@ -8,7 +8,7 @@ The SMD Void Calculator is a Python project designed to calculate the voids of s
 
    ![image](https://github.com/icrnjavic/SMD-VoidCalculator/assets/32548477/37f5334a-4cde-45ad-a43a-adc621b28e6c)
 
-2. After selecting the image and clicking "Open," the image will open in a new window. You can start marking the areas as seen below:
+2. After selecting the image and clicking "Open," the image(in my example i will use a x-ray image of a soldered pcb) will open in a new window. You can start marking the areas as seen below:
 
    ![image](https://github.com/icrnjavic/SMD-VoidCalculator/assets/32548477/215928cf-162a-425e-ae95-dc2f02836e25)
 
