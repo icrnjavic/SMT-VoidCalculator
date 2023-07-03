@@ -1,26 +1,31 @@
-# SMD Void Calculator
-
 The SMD Void Calculator is a Python project designed to calculate the voids of solder joints. It is a simple tool that analyzes images of solder joints and accurately(relativley to how well you mark the areas) determines the void percentages.
 
 ## How it works
 
 1. First, a pop-up window will appear, allowing you to select the image on which you want to calculate the void percentage.
 
-   ![image](https://github.com/icrnjavic/SMD-VoidCalculator/assets/32548477/37f5334a-4cde-45ad-a43a-adc621b28e6c)
+   ![slika](https://github.com/icrnjavic/SMD-VoidCalculator/assets/32548477/34a3baf0-b839-44c1-8368-5fa8e6bc1783)
 
-2. After selecting the image and clicking "Open," the image(in my example i will use a x-ray image of a soldered pcb) will open in a new window. You can start marking the areas as seen below:
+   
 
-   ![image](https://github.com/icrnjavic/SMD-VoidCalculator/assets/32548477/215928cf-162a-425e-ae95-dc2f02836e25)
+
+3. After selecting the image and clicking "Open," the image(in my example i will use a x-ray image of a soldered pcb) will open in a new window. You can start marking the areas as seen below:
+
+   ![slika](https://github.com/icrnjavic/SMD-VoidCalculator/assets/32548477/4e97b5d2-09bc-4341-9b9b-6ffb23619672)
+
+   
 
    - The first marked area is considered the entire soldered pad and is marked green.
    - All subsequent marked areas are considered voids and are marked in red.
 
-3. When you finish marking the areas, press the "esc" key. A new window will appear, showing the calculated void percentage.
+4. When you finish marking the areas, press the "esc" key. A new window will appear, showing the calculated void percentage.
+   ![slika](https://github.com/icrnjavic/SMD-VoidCalculator/assets/32548477/14fc9d68-9410-4b5c-9323-e8ff0935270d)
 
-   ![image](https://github.com/icrnjavic/SMD-VoidCalculator/assets/32548477/a8a5da3a-dab9-4df0-807c-52a7556744ba)
+   
 
-4. Press the "esc" key one more time to save the picture with the calculated void percentage in the app's directory. The saved picture will have the same name as the initial image, with "-measured" appended at the end.
+5. Press the "esc" key one more time to save the picture with the calculated void percentage in the app's directory. The saved picture will have the same name as the initial image, with "-measured" appended at the end.
+   ![slika](https://github.com/icrnjavic/SMD-VoidCalculator/assets/32548477/246dbdb0-3f62-4c9e-8fa3-536fcb0306d6)
 
-   ![image](https://github.com/icrnjavic/SMD-VoidCalculator/assets/32548477/b0d2ac9f-ce93-4451-a4d0-7c388309b1e9)
+   
 
-5. After saving the processed image, the application will close.
+6. After saving the processed image, the application will close.
