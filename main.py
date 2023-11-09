@@ -4,14 +4,13 @@ import tkinter as tk
 from tkinter import filedialog
 import os
 
-#Spremenljivke za point-e in slike.
 areas = []
 img = None
 drawing = False
 zoom_level = 1.0
 
 
-#Izračun void-a.
+# Void calculation
 def calculate_void_percentage():
     soldered_area = areas[0]
     individual_void_area = sum([cv2.contourArea(cv2.convexHull(np.array(contour))) for contour in areas[1:]])
@@ -23,7 +22,7 @@ def calculate_void_percentage():
     void_percentage = (combined_void_area / cv2.contourArea(cv2.convexHull(np.array(soldered_area)))) * 100
     return void_percentage
 
-#Izpis izračunenega void-a.
+# Void configs
 def draw_text(image, text, position):
     font = cv2.FONT_HERSHEY_SIMPLEX
     font_scale = 1
@@ -33,7 +32,7 @@ def draw_text(image, text, position):
     text_position = (position[0], position[1] - text_size[1])
     cv2.putText(image, text, text_position, font, font_scale, color, thickness, cv2.LINE_AA)
 
-#Označevanje območij solder pad/voids.
+# Area marker
 def draw_areas(image, areas):
     img_copy = image.copy()
     for i, contour in enumerate(areas):
@@ -41,18 +40,19 @@ def draw_areas(image, areas):
         cv2.polylines(img_copy, np.array([contour]), False, color, 1)
     return img_copy
 
-#Poskus za zoomiranje -> še ni na nivoju.
+# Failed attempt of a zoom function
 def resize_image(image, zoom_level):
     new_width = int(image.shape[1] * zoom_level)
     new_height = int(image.shape[0] * zoom_level)
     resized_image = cv2.resize(image, (new_width, new_height))
     return resized_image
 
-#Sprememba kontrasti za lažjo označevanje voidov.
+# Adjusted contrast(based on the test X-ray image of an electronic)
 def adjust_contrast(image, contrast):
     adjusted_image = cv2.convertScaleAbs(image, alpha=contrast)
     return adjusted_image
 
+# Mouse events
 def mouse_callback(event, x, y, flags, param):
     global areas, img, drawing, zoom_level
     if event == cv2.EVENT_LBUTTONDOWN:
@@ -64,22 +64,22 @@ def mouse_callback(event, x, y, flags, param):
         if drawing:
             areas[-1].append((x, y))
 
-#Kreacija popup-a za izbiro slike.
+
 root = tk.Tk()
 root.withdraw()
 
-#Izbira input slike ter ime output slike.
+# Paths
 image_path = filedialog.askopenfilename(title="Select Image", filetypes=[("Image files", "*.jpg *.jpeg *.png")])
 file_name = os.path.splitext(os.path.basename(image_path))[0]
 new_file_name = file_name + "-measured"
 
-#Beri izbrano sliko
+# Read & adjust the selected image
 img = cv2.imread(image_path)
 original_img = img.copy()
 contrast_factor = 1.5  #Vrednost za spreminjanje kontrasi
 adjusted_img = adjust_contrast(img, contrast_factor)
 
-#Kreiraj okno za Image in aktiviraj mouse callback.
+# Create an image window and start the mouse callback
 cv2.namedWindow('Image')
 cv2.setMouseCallback('Image', mouse_callback)
 
@@ -98,12 +98,12 @@ while True:
         zoom_level -= 0.1
         zoom_level = max(0.1, zoom_level)  # Minimum = 0.1x
 
-    # enter za izpis kalkulacije void-a v terminalu.
+    # esct to calculate the void percentage
     elif key == 13:
         void_percentage = calculate_void_percentage()
         print('Void Percentage:', void_percentage)
 
-    # esc za izpis void-a ter ponovni esc za shranjevanje izračuna.
+    # esc to display the calculated void percentage.
     elif key == 27:
         void_percentage = calculate_void_percentage()
         result_text = f'Void Percentage: {void_percentage:.2f}%'
@@ -113,6 +113,11 @@ while True:
             print(f'Area {i + 1} Size:', area_size)
         cv2.imshow('Image with Void Percentage', img_copy)
         cv2.waitKey(0)
-        cv2.imwrite(new_file_name+".jpg", img_copy)
+        
+        # Get desktop path for the current user
+        desktop_path = os.path.join(os.path.expanduser("~"), "Desktop")
+        save_path = os.path.join(desktop_path, new_file_name + ".jpg")
+        
+        cv2.imwrite(save_path, img_copy)
         break
 cv2.destroyAllWindows()
